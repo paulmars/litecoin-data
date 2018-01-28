@@ -8,4 +8,4 @@ def command(line)
   puts result if DEBUG
 end
 
-command("#{PATH}#{BINARY} getmininginfo")
+command("#{PATH}#{BINARY} help > ./commands")
