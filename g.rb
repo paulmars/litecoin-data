@@ -8,4 +8,12 @@ def command(line)
   puts result if DEBUG
 end
 
-command("#{PATH}#{BINARY} help > ./commands")
+command("#{PATH}#{BINARY} getinfo")
+
+commands = File.new("commands", "r")
+commands.each do |line|
+  line = line.rstrip
+  next if line[0] == '='
+  next if line == ""
+  puts line
+end
