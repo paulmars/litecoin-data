@@ -6,6 +6,7 @@ def run_command(c)
   puts c if DEBUG
   result = `#{c}`
   puts result if DEBUG
+  result
 end
 
 def run_litecoin_command(c)
@@ -18,5 +19,12 @@ commands.each do |line|
   next if line[0] == '='
   next if line == ""
   command = line.split(" ")[0]
-  run_litecoin_command(command)
+
+  next if command == "gettxoutsetinfo"
+
+  result = run_litecoin_command(command)
+  next if result == ""
+  output = File.new("./examples/#{command}", 'w')
+  output << result
+  output.close
 end
