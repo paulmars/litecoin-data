@@ -5,4 +5,4 @@ def command(line)
   puts result if DEBUG
 end
 
-command('./src/litecoin-cli getmininginfo')
+command('../litecoin/src/litecoin-cli getmininginfo')
