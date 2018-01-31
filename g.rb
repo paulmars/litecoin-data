@@ -9,22 +9,20 @@ def run_command(c)
   result
 end
 
-def run_litecoin_command(c)
+def lite_cmd(c)
   run_command("#{PATH}#{BINARY} #{c}")
 end
 
-commands = File.new("commands", "r")
-commands.each do |line|
-  line = line.rstrip
-  next if line[0] == '='
-  next if line == ""
-  command = line.split(" ")[0]
-
-  next if command == "gettxoutsetinfo"
-
-  result = run_litecoin_command(command)
-  next if result == ""
-  output = File.new("./examples/#{command}", 'w')
-  output << result
-  output.close
+def block_header(hash)
+  lite_cmd("getblockheader #{hash}")
 end
+
+def best_hash
+  lite_cmd("getbestblockhash")
+end
+
+def best_header
+  lite_cmd("getblockheader #{best_hash} true")
+end
+
+
