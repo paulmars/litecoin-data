@@ -1,7 +1,7 @@
 require 'json'
 require 'awesome_print'
 
-DEBUG = true
+DEBUG = false
 PATH = "../litecoin/"
 BINARY = "src/litecoin-cli"
 
@@ -21,12 +21,28 @@ def best_hash
 end
 
 def block_raw(hash, verbose)
-  lite_cmd("getblock \"#{best_hash}\" #{verbose}")
+  lite_cmd("getblock \"#{hash}\" #{verbose}")
 end
 
 # def block(hash, verbose)
 #   JSON.parse(block_raw(hash, verbose))
 # end
 
-first_block = block_raw(best_hash, 2)
+BLOCK_DATA_DIR = "block_data"
+
+block_name = best_hash
+
+while(true) do
+  puts "=========="
+  puts block_name
+
+  block_raw_data = block_raw(block_name, 2)
+
+  block_file = File.new("#{BLOCK_DATA_DIR}/#{block_name}", 'w')
+  block_file << block_raw_data
+  block_file.close
+
+  json_data = JSON.parse(block_raw_data)
+  block_name = json_data["previousblockhash"]
+end
 
