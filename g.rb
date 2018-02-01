@@ -6,9 +6,9 @@ PATH = "../litecoin/"
 BINARY = "src/litecoin-cli"
 
 def run_command(c)
-  ap c if DEBUG
+  puts c if DEBUG
   result = `#{c}`
-  # ap result if DEBUG
+  puts result if DEBUG
   result
 end
 
@@ -20,9 +20,13 @@ def best_hash
   lite_cmd("getbestblockhash").rstrip
 end
 
-def block(hash, verbose)
-  JSON.parse(lite_cmd("getblock \"#{best_hash}\" #{verbose}"))
+def block_raw(hash, verbose)
+  lite_cmd("getblock \"#{best_hash}\" #{verbose}")
 end
 
-ap first_block = block(best_hash, 2)
+# def block(hash, verbose)
+#   JSON.parse(block_raw(hash, verbose))
+# end
+
+first_block = block_raw(best_hash, 2)
 
