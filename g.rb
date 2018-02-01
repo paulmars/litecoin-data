@@ -1,5 +1,6 @@
 require 'json'
 require 'awesome_print'
+require 'fileutils'
 
 DEBUG = false
 PATH = "../litecoin/"
@@ -24,16 +25,12 @@ def block_raw(hash, verbose)
   lite_cmd("getblock \"#{hash}\" #{verbose}")
 end
 
-# def block(hash, verbose)
-#   JSON.parse(block_raw(hash, verbose))
-# end
-
 BLOCK_DATA_DIR = "block_data"
+FileUtils.mkdir_p(BLOCK_DATA_DIR)
 
 block_name = best_hash
 
 while(true) do
-  puts "=========="
   puts block_name
 
   block_raw_data = block_raw(block_name, 2)
